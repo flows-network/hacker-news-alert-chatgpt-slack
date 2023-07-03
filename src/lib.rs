@@ -21,7 +21,7 @@ use web_scraper_flows::get_page_text;
 pub async fn run() {
     dotenv().ok();
     let keyword = std::env::var("KEYWORD").unwrap_or("ChatGPT".to_string());
-    schedule_cron_job(String::from("38 * * * *"), keyword, callback).await;
+    schedule_cron_job(String::from("52 * * * *"), keyword, callback).await;
 }
 
 async fn callback(keyword: Vec<u8>) {
@@ -93,12 +93,10 @@ pub async fn send_message_wrapper(hit: Hit) -> anyhow::Result<()> {
     let title = &hit.title;
     let author = &hit.author;
     let post = format!("https://news.ycombinator.com/item?id={}", &hit.object_id);
-    let mut source = "".to_string();
     let mut inner_url = "".to_string();
 
     let _text = match &hit.url {
         Some(u) => {
-            source = format!("(<{u}|source>)");
             inner_url = u.clone();
             get_page_text(u)
                 .await
@@ -115,13 +113,13 @@ pub async fn send_message_wrapper(hit: Hit) -> anyhow::Result<()> {
         format!("Bot found minimal info on webpage to warrant a summary, please see the text on the page the Bot grabbed below if there are any, or use the link above to see the news at its source:\n{_text}")
     };
 
-    let post_str = if !inner_url.is_empty() {
-        format!("[*Post*]({inner_url})")
+    let source = if !inner_url.is_empty() {
+         format!("<{u}|source>")
     } else {
         "".to_string()
     };
 
-    let msg = format!("- *{title}*\n<{post} | {post_str} by {author}\n{summary}");
+    let msg = format!("- <{post}|*{title}*>\n{source} by {author}\n{summary}");
     send_message_to_channel(&workspace, &channel, msg).await;
 
     Ok(())
