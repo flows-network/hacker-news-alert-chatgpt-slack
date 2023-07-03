@@ -114,7 +114,7 @@ pub async fn send_message_wrapper(hit: Hit) -> anyhow::Result<()> {
     };
 
     let source = if !inner_url.is_empty() {
-         format!("<{u}|source>")
+         format!("<{inner_url}|source>")
     } else {
         "".to_string()
     };
