@@ -21,7 +21,7 @@ use web_scraper_flows::get_page_text;
 pub async fn run() {
     dotenv().ok();
     let keyword = std::env::var("KEYWORD").unwrap_or("ChatGPT".to_string());
-    schedule_cron_job(String::from("52 * * * *"), keyword, callback).await;
+    schedule_cron_job(String::from("29 * * * *"), keyword, callback).await;
 }
 
 async fn callback(keyword: Vec<u8>) {
