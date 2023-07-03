@@ -1,0 +1,6 @@
+/target
+/Cargo.lock
+bot.webhook.json
+.cargo
+.env*
+.direnv/
