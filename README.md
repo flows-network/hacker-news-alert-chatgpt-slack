@@ -1,4 +1,4 @@
-# <p align="center">HackerNews Alert</p>
+# <p align="center">Summarize Hacker News Posts Using ChatGPT - Slack Version</p>
 <p align="center">
   <a href="https://discord.gg/ccZn9ZMfFf">
     <img src="https://img.shields.io/badge/chat-Discord-7289DA?logo=discord" alt="flows.network Discord">
@@ -6,52 +6,89 @@
   <a href="https://twitter.com/flows_network">
     <img src="https://img.shields.io/badge/Twitter-1DA1F2?logo=twitter&amp;logoColor=white" alt="flows.network Twitter">
   </a>
-   <a href="https://flows.network/flow/new">
+   <a href="https://flows.network/flow/createByTemplate/hacker-news-alert-chatgpt-slack">
     <img src="https://img.shields.io/website?up_message=deploy&url=https%3A%2F%2Fflows.network%2Fflow%2Fnew" alt="Create a flow">
   </a>
 </p>
 
-[Deploy this function on flows.network](#deploy-the-hackernews-alert-app), and you will reveice HackerNews post alerts per hour according to your interests. 
+[Deploy this function on flows.network](#deploy-your-own-hacker-news-summary-bot-in-3-steps) and receive hourly alerts with summarized Hacker News posts tailored to your interests.
 
-<img width="658" alt="image" src="https://user-images.githubusercontent.com/45785633/227419393-d7a438f1-51c9-42bc-bb9a-bac1cd3e5581.png">
+<img width="654" alt="image" src="https://github.com/flows-network/hacker-news-alert-chatgpt-discord/assets/45785633/d07153ad-ce30-419e-98a0-55e144875191">
 
-## Deploy the HackerNews Alert App
+## How it works
 
-To create this App, we will use [flows.network](https://flows.network/), a serverless platform that makes deploying your own app quick and easy in just three steps.
+This scheduled bot uses ChatGPT to summarize Hacker News posts. At the specified time, the bot searches for posts from the past hour, filters them based on your chosen keyword, and sends you a Slack message with a summary. If there are no posts containing the keyword, the bot will skip.
 
-### Fork this repo
+## Deploy your own Hacker News summary bot in 3 steps
 
-Fork [this repo](https://github.com/flows-network/hackernews-alert/) and go to flows.network to deploy your function. 
+1. Create a bot from a template
+2. Configure the bot on a specified Slack channel
+3. Add your OpenAI API key
 
-### Deploy the code on flow.network
 
-1. Sign up for an account for deploying flows on [flows.network](https://flows.network/). It's free.
-2. Click on the "Create a Flow" button to start deploying this APP
-3. Authenticate the [flows.network](https://flows.network/) to access the `hackernews-alert` repo you just forked. 
-![image](https://user-images.githubusercontent.com/45785633/227176033-35a445d8-9e73-4d6d-a919-c68d64cc4075.png)
+### 0 Prerequisites
 
-4. Click on the Advanced text and you will see more settings. Fill in the required Environment Variables. In this example, we have three variables. One is `KEYWORD`: fill in one topic you want to listen to, like `ChatGPT`. The other two variables: `WORKSPACE` and `CHANNEL`: fill in your own workspace and channel
+* You will need to bring your own [OpenAI API key](https://openai.com/blog/openai-api). If you do not already have one, [sign up here](https://platform.openai.com/signup).
 
-![image](https://user-images.githubusercontent.com/45785633/227176580-b7e8d31d-b871-45b4-baee-312572615e8a.png)
+* Sign up on [flows.network](https://flows.network/) using your GitHub account. It is free.
 
-5. At last, click the Deploy button to deploy your function.
+### 1 Create a bot from a template
 
-### Configure SaaS integrations
 
-After that, the flows.network will direct you to configure the SaaS integration required by your flow.
+Go to [the Hacker News Alert ChatGPT Slack template](https://flows.network/flow/createByTemplate/hacker-news-alert-chatgpt-slack).
 
-![image](https://user-images.githubusercontent.com/45785633/227176699-a1ce1c05-02b9-411a-890f-ece033fde38e.png)
+Review the `KEYWORD` variable to specify your keyword of interest (supporting only one keyword for each bot).
 
-Here we can see, we need to configue one SaaS integration.
+Click on the **Create and Build** button.
 
-Click the "Connect/+ Add new authentication" button to authenticate your Slack account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network` bot on your workspace. This workspace is the one you entered into the environment variables above.
+### 2 Configure the bot to access Slack
 
-> If you have authenticated the workspace before,you can see the purple Connect button turns gray Connected button. Just ingore this step and click Check button.
+Next, you will tell the bot which Slack channel you want your alert messages to be sent to.
 
-After that, click the Check button to see your flow details. As soon as the flow function's status becomes `ready` and the flow's status became `running`, the Hackernews alert App goes live. You will get a salck message at the 50th minute of every hour !
+* `slack_channel`
+Slack organization of the Slack channel where you want to deploy the bot. Case sensitive.
 
-![image](https://user-images.githubusercontent.com/45785633/227177456-a51eacda-2f09-4206-874b-4dc73c3408d8.png)
+* `slack_workspace`
+The Slack channel where you want to deploy the bot. Case sensitive.
 
-> [flows.network](https://flows.network/) is still in its early stages. We would love to hear your feedback!
+Enter your Slack workspace and channel respectively in the red boxes below.
+![image](https://github.com/flows-network/github-star-slack-messenger/assets/45785633/0d9ac244-f327-4366-972c-47ef05472057)
+
+
+Next, let's grant flows.network to access the Slack channel you just entered. The Slack channel must be public.
+
+Click the "Connect/+ Add new authentication" button to authenticate your Slack account. You'll be redirected to a new page where you must grant [flows.network](https://flows.network/) permission to install the `flows-network` bot on your workspace. This workspace is the one you entered into the `slack_workspace` above.
+
+### 3 Add your OpenAI API key
+
+Set up the OpenAI integration. Click on **Connect**, and enter your key. The default key name is `Default`.
+
+[<img width="450" alt="image" src="https://user-images.githubusercontent.com/45785633/222973214-ecd052dc-72c2-4711-90ec-db1ec9d5f24e.png">](https://user-images.githubusercontent.com/45785633/222973214-ecd052dc-72c2-4711-90ec-db1ec9d5f24e.png)
+
+Close the tab and go back to the flow.network page once you are done. Click **Deploy**.
+## Wait for the magic!
+
+You are now on the flow details page and the flow function takes a few seconds to build. Once the flow's status changes to `running`, your bot is ready to summarize Hacker News posts.
+
+
+## FAQ
+
+### How to customize the bot's scheduled messaging time?
+
+To customize the time when the bot sends Slack messages, you can modify the value in the cron expression ("37 * * * *"). This expression means the bot sends messages at the 37th minute of every hour.
+
+```
+    schedule_cron_job(String::from("37 * * * *"), keyword, callback).await;
+```
+
+To adjust the timing, you can change the number 37 to your desired minute. For example, if you want the messages to be sent at the 15th minute of every hour, you can modify the expression to be ("15 * * * *").
+
+By customizing the cron expression, you can set the desired timing for the bot to send Slack messages.
+
+
+
+
+
+
 
 
