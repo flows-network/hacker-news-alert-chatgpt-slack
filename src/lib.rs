@@ -1,5 +1,4 @@
 use anyhow;
-use discord_flows::http::HttpBuilder;
 use dotenv::dotenv;
 use flowsnet_platform_sdk::write_error_log;
 
