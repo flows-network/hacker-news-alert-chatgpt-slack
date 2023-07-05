@@ -65,8 +65,8 @@ async fn get_summary_truncated(inp: &str) -> anyhow::Result<String> {
         .collect::<Vec<&str>>()
         .join(" ");
 
-    let chat_id = format!("summary#99");
-    let system = &format!("You're an AI assistant.");
+    let chat_id = "summary#99".to_string();
+    let system = "You are an expert in technology, hobbyist, and entrepreneur subjects. You will be asked to summarize news articles.";
 
     let co = ChatOptions {
         model: ChatModel::GPT35Turbo16K,
@@ -77,7 +77,7 @@ async fn get_summary_truncated(inp: &str) -> anyhow::Result<String> {
         ..Default::default()
     };
 
-    let question = format!("summarize this within 100 words: {news_body}");
+    let question = format!("Please provide a TLDR summary for the following text. Limit the summary to 100 words:\n {news_body}");
 
     match openai.chat_completion(&chat_id, &question, &co).await {
         Ok(r) => Ok(r.choice),
